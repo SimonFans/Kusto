@@ -1,0 +1,12 @@
+// Create a calculated column and adds to the result set
+AsyncQoSEvents
+| where region == "ukwest"
+| extend latencyTimes10 = latency * 10
+       , latencyTimes100 = latency * 100
+| limit 10
+
+// Create a calculated column which concate two colunms value 
+AsyncQoSEvents
+| where region == "ukwest"
+| extend regionConcateResource = strcat(region, '-', resourceName)
+| limit 10
