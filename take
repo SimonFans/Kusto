@@ -1,0 +1,5 @@
+// take: no guarantee to which rows are returned
+AKSAlertmanager
+| where TIMESTAMP >= ago(1h)
+  and resource == "events" 
+| take 10
