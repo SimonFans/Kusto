@@ -1,0 +1,53 @@
+// search all columns in the AppDependencies table for the value "Azure". Search is not case sensitive by default
+AppDependencies
+| search "Azure"
+| limit 10
+
+// you can make it insensitive using a switch
+AppDependencies
+| search kind=case_sensitive "Azure"
+| limit 10 
+
+// limit the search to specific tables. you can also write as AppDependencies | search "Azure"
+search in (Alert, AppDependencies) "Azure"
+| limit 10
+
+// within a table, you can search a specific column for an exact value
+AppDependencies
+| search ResultCode=="200"
+| limit 10
+
+// search for the value anywhere in the text in the specified column
+AppDependencies
+| search DependencyType:"queue"
+| limit 10
+
+// search across all columns using wildcards. Anywhere in any column's text
+AppDependencies
+| search "*queue*"
+| limit 5
+
+// search all columns that begin with Azure then any text after it
+AppDependencies
+| search * startswith "Shanghai"
+| limit 5
+
+// search all columns that end with queue
+AppDependencies
+| search * endswith "queue"
+| limit 5
+
+// serch all columns that begin with Azure, ends with queue, anything in between I don't care
+AppDependencies
+| search "Azure*queue"
+| limit 5
+
+// searches can be combined logically
+AppDependencies
+| search "Azure*queue" and ("200" or "201")
+| limit 10
+
+// search supports regular expression
+AppDependencies
+| search ParentId matches regex "^[a-z]"
+| limit 10
