@@ -1,0 +1,38 @@
+// basic where clause filter by hour, you can do ago(1m), ago(1s)...
+AKSAlertmanager
+| where TIMESTAMP >= ago(1h)
+  and resource == "events" 
+| limit 10
+
+// stackable where operators
+AKSAlertmanager
+| where TIMESTAMP >= ago(1h)
+  and resource == "events" 
+| where Underlay == "cx-97"
+| limit 10
+
+// you can simulte search using where. Search all columns in the input for the phrase westus somewhere in a column's value
+AKSAlertmanager
+| where * has "westus"
+| limit 10
+
+// you can search positional matches. 
+// match start
+AKSAlertmanager
+| where * hasprefix "ingresses"
+| limit 10
+
+// match end
+AKSAlertmanager
+| where * hassuffix "p"
+| limit 10
+
+// return all rows if any column contains ingresses
+AKSAlertmanager
+| where * contains "ingresses"
+| limit 10
+
+// where supports regex as well
+AKSAlertmanager
+| where RPTenant matches regex "[c]+"
+| limit 10
