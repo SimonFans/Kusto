@@ -1,0 +1,11 @@
+// summarize like an aggregation function. You can rename the output column for count
+AKSAlertmanager
+| summarize RPTenantCount = count() by RPTenant
+
+// Bin allows you to summarize into logical groups, like on a daily basis
+AKSAlertmanager
+| summarize NumberOfEntries = count() by bin(PreciseTimeStamp, 1d)
+
+// aggregate by multiple levels
+AKSAlertmanager
+| summarize NumberOfEntries = count() by bin(PreciseTimeStamp, 1d), resource
