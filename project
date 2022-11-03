@@ -1,0 +1,27 @@
+// Project allows you to select a subset of colunms
+AsyncQoSEvents
+| project region
+        , resourceName
+| extend regionConcateResource = strcat(region, '-', resourceName)
+| project regionConcateResource
+| limit 5
+
+// Project can simulate the extend
+AsyncQoSEvents
+| project region
+        , resourceName
+        , regionConcateResource = strcat(region, '-', resourceName)
+| limit 5
+
+// project-away. It will project all except the columns listed
+AsyncQoSEvents
+| project-away region
+        , resourceName
+| limit 5
+
+// If you only want to rename a column, then use project-rename 
+AsyncQoSEvents
+| where region == "ukwest"
+| project region
+| project-rename newRegionname = region
+| limit 5
